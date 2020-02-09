@@ -1,0 +1,14 @@
+{
+  "name": "JavaScript30",
+  "version": "1.0.0",
+  "main": "index.js",
+  "repository": "git@github.com:gabeteaches/JavaScript30.git",
+  "author": "hey@gabe.mx",
+  "license": "MIT",
+  "scripts": {
+    "start": "./run.js"
+  },
+  "dependencies": {
+    "live-server": "^1.2.1"
+  }
+}

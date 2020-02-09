@@ -58,24 +58,33 @@
   <audio data-key="76" src="sounds/tink.wav"></audio>
 
 <script>
-  function removeTransition(e) {
-    if (e.propertyName !== 'transform') return;
-    e.target.classList.remove('playing');
+  function playSound(keyCode) {
+    const els = document.querySelectorAll(`[data-key="${keyCode}"]`)
+    els.forEach((el) => {
+      // Audio
+      if (el instanceof HTMLAudioElement) {
+        el.currentTime = 0
+        el.play();
+        return;
+      }
+      // Key
+      el.classList.add('playing')
+    })
+  }
+  
+  function removeTransition(ev) {
+    if (ev.propertyName !== 'transform') return;
+    ev.target.classList.remove('playing')
   }
 
-  function playSound(e) {
-    const audio = document.querySelector(`audio[data-key="${e.keyCode}"]`);
-    const key = document.querySelector(`div[data-key="${e.keyCode}"]`);
-    if (!audio) return;
-
-    key.classList.add('playing');
-    audio.currentTime = 0;
-    audio.play();
-  }
-
-  const keys = Array.from(document.querySelectorAll('.key'));
-  keys.forEach(key => key.addEventListener('transitionend', removeTransition));
-  window.addEventListener('keydown', playSound);
+  document.querySelectorAll('.key').forEach((key) => {
+    // Remove playing style on transition end
+    key.addEventListener('transitionend', removeTransition)
+    // Listen for key clicks
+    key.addEventListener('click', () => playSound(key.dataset.key))
+  })
+  // Listen for Key Downs
+  document.addEventListener('keydown', (ev) => playSound(ev.keyCode))
 </script>
 
 
